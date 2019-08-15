@@ -16,8 +16,9 @@ namespace NewEnrollmentsProgram
 
         int count = 0;
 
-        _Application excel = new EXL.Application();
 
+        //open 2 excel apps
+        _Application excel = new EXL.Application();
         _Application excelDest = new EXL.Application();
 
 
@@ -141,7 +142,7 @@ namespace NewEnrollmentsProgram
             }
 
             wbDest.Save();
-
+            
             wb.Close();
             wbDest.Close();
 
