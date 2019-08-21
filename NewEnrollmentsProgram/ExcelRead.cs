@@ -43,6 +43,7 @@ namespace NewEnrollmentsProgram
             var wbDest = workbooksDest.Open(destFilename);
             var wsDest = excelDest.Worksheets[1];
 
+            //**need better way to terminate procress
             try
             {
                 var processes = Process.GetProcessesByName("excel");
