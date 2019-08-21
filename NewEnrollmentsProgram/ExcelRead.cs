@@ -18,8 +18,8 @@ namespace NewEnrollmentsProgram
 
 
         //open 2 excel apps
-        _Application excel = new EXL.Application();
-        _Application excelDest = new EXL.Application();
+        _Application excel = new Application();
+        _Application excelDest = new Application();
 
 
         public ExcelRead(string path, int sheet)
@@ -43,6 +43,7 @@ namespace NewEnrollmentsProgram
             var wbDest = workbooksDest.Open(destFilename);
             var wsDest = excelDest.Worksheets[1];
 
+            //**need better way to terminate procress
             try
             {
                 var processes = Process.GetProcessesByName("excel");
