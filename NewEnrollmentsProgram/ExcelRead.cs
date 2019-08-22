@@ -106,13 +106,28 @@ namespace NewEnrollmentsProgram
 
             for (int row = 2; ws.Cells[row, EEIDCol].Value != null; row++)
             {                
-                if (ws.Cells[row, hireCol].Value != null && ws.Cells[row, hireCol].Value.GetType() == typeof(DateTime))
+                if ( ws.Cells[row, hireCol].Value.GetType() == typeof(DateTime) )
                 {
-                    if (ws.Cells[row, hireCol].Value.Month.ToString() == month && ws.Cells[row, hireCol].Value.Year.ToString() == year)
+                    if (ws.Cells[row, reHireCol].Value == null)
                     {
-                        if (ws.Cells[row, termCol].Value != null)
+                        if ((ws.Cells[row, hireCol].Value.Month.ToString() == month) && ws.Cells[row, hireCol].Value.Year.ToString() == year)
                         {
-                            if (ws.Cells[row, termCol].Value.ToString() != "T")
+                            if (ws.Cells[row, termCol].Value != null)
+                            {
+                                if (ws.Cells[row, termCol].Value.ToString() != "T")
+                                {
+                                    wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
+                                    wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+                                    wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
+                                    wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
+                                    wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
+                                    wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
+                                    wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
+
+                                    i++;
+                                }
+                            }
+                            else
                             {
                                 wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
                                 wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
@@ -124,21 +139,43 @@ namespace NewEnrollmentsProgram
 
                                 i++;
                             }
+
                         }
-                        else
+                    }
+                    else
+                    {
+                        if ((ws.Cells[row, reHireCol].Value.Month.ToString() == month) && ws.Cells[row, reHireCol].Value.Year.ToString() == year)
                         {
-                            wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
-                            wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
-                            wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
-                            wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
-                            wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
-                            wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
-                            wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
+                            if (ws.Cells[row, termCol].Value != null)
+                            {
+                                if (ws.Cells[row, termCol].Value.ToString() != "T")
+                                {
+                                    wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
+                                    wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+                                    wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
+                                    wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
+                                    wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
+                                    wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
+                                    wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
 
-                            i++;
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
+                                wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+                                wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
+                                wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
+                                wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
+                                wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
+                                wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
+
+                                i++;
+                            }
+
                         }
-
-                    }                    
+                    }
                 }
             }
 
