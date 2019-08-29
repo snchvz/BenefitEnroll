@@ -16,12 +16,10 @@ namespace NewEnrollmentsProgram
 
         int count = 0;
 
-
         //open 2 excel apps
         _Application excel = new Application();
         _Application excelDest = new Application();
-
-
+        
         public ExcelRead(string path, int sheet)
         {
 
@@ -81,7 +79,7 @@ namespace NewEnrollmentsProgram
             {
                 foreach (dynamic worksheet in wbDest.Worksheets)
                 {
-                    worksheet.Cells.ClearContents();
+                    worksheet.Cells.Clear();
                 }
 
                 wbDest.Save();
@@ -102,7 +100,13 @@ namespace NewEnrollmentsProgram
 
             int i = 2;
 
-            //ws.Cells[row, EEIDCol].Value != null
+            wsDest.Cells[1, 1].Value = "ID";
+            wsDest.Cells[1, 2].Value = "Yard";
+            wsDest.Cells[1, 3].Value = "LName";
+            wsDest.Cells[1, 4].Value = "FName";
+            wsDest.Cells[1, 5].Value = "Hire";
+            wsDest.Cells[1, 6].Value = "Rehire";
+            wsDest.Cells[1, 7].Value = "Pos";
 
             for (int row = 2; ws.Cells[row, EEIDCol].Value != null; row++)
             {                
