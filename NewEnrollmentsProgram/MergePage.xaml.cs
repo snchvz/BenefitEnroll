@@ -19,11 +19,11 @@ using Outlook = Microsoft.Office.Interop.Outlook;
 namespace NewEnrollmentsProgram
 {
     /// <summary>
-    /// Interaction logic for MailMergePage.xaml
+    /// Interaction logic for MergePage.xaml
     /// </summary>
-    public partial class MailMergePage : Page
+    public partial class MergePage : Page
     {
-        public MailMergePage()
+        public MergePage()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace NewEnrollmentsProgram
         {
             Word.Application oWord = new Word.Application();
             Word.Document oWordDoc = new Word.Document();
-            
+
             Object oTemplatePath = @"D:\Documents\PerformanceMergeTemplate.doc";
             try
             {
@@ -92,7 +92,7 @@ namespace NewEnrollmentsProgram
                 Outlook.Application _app = new Outlook.Application();
                 Outlook.MailItem mail = (Outlook.MailItem)_app.CreateItem(Outlook.OlItemType.olMailItem);
 
-                string filepath = @"\\FW-DC\Users\mchavez\My Documents\EMPLOYEE PERFORMANCE REVIEW.docx";
+                string filepath = @"D:\Documents\EMPLOYEE PERFORMANCE REVIEW.docx";
 
                 mail.To = "asanchez@fenceworks.us";
                 mail.Subject = "Performance Reviews";
@@ -110,7 +110,6 @@ namespace NewEnrollmentsProgram
             {
                 MessageBox.Show("failed to send email");
             }
-            
         }
     }
 }

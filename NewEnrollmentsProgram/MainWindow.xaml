@@ -8,9 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Button Content="Mail Merge Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="157" Click="Button_Click_2" Height="42"/>
-        <Button Content="Make List Page" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top" Width="179" Height="42" Click="Button_Click"/>
-        <Frame x:Name="Main" Margin="0,57,-0.4,0" NavigationUIVisibility="Hidden"/>
-
+        <Frame x:Name="Main" Margin="0,65,0,0" NavigationUIVisibility="Hidden" Background="Bisque"/>
+        <Button Content="Mail Merge Page" HorizontalAlignment="Left" Margin="182,10,0,0" VerticalAlignment="Top" Width="157" Click="Button_Click_2" Height="42"/>
+        <Button Content="Make List Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="157" Height="42" Click="Button_Click"/>
     </Grid>
 </Window>

@@ -23,7 +23,7 @@ namespace NewEnrollmentsProgram
     /// </summary>
     public partial class MainWindow : Window
     {
-        MailMergePage mailPage = new MailMergePage();
+        MergePage mailPage = new MergePage();
         MakeListPage listPage = new MakeListPage();
 
         public MainWindow()
