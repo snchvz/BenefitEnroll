@@ -19,23 +19,59 @@ namespace NewEnrollmentsProgram
         //open 2 excel apps
         _Application excel = new Application();
         _Application excelDest = new Application();
-        
+
+        //used to reference excel process
+        int id1 = 0;
+        int id2 = 0;
+
         public ExcelRead(string path, int sheet)
         {
 
         }
 
-        public int readWriteCell(int monthInt, string year, string path, int sheet, string filename, string destFilename)
+        private string CloseDoc(Workbook wb, Workbook wbDest, Workbooks wbs, Workbooks workbooksDest, dynamic wsDest)
         {
-            int id1 = 0;
-            int id2 = 0;
+            wbDest.Save();
+
+            wb.Close();
+            wbs.Close();
+
+            wbDest.Close();
+            workbooksDest.Close();
+
+            //**Excel Process is NOT being terminated after marshall release
+            //Marshal.ReleaseComObject(sheets);
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(wbs);
+            Marshal.ReleaseComObject(excel);
+
+            Marshal.ReleaseComObject(wbDest);
+            Marshal.ReleaseComObject(workbooksDest);
+            Marshal.ReleaseComObject(wsDest);
+            Marshal.ReleaseComObject(excelDest);
+
+            try
+            {
+                Process.GetProcessById(id1).Kill();
+                Process.GetProcessById(id2).Kill();
+            }
+            catch
+            {
+                return "failed to terminate excel procress\nplease terminate excel process manually through task manager";
+            }
+            return "Done";
+        }
+
+        public string readWriteCell(int monthInt, string year, string path, int sheet, string filename, string destFilename)
+        {
+
 
             this.path = path;
 
             var wbs = excel.Workbooks;
             var wb = wbs.Open(path);
-            var sheets = wb.Worksheets;
-            var ws = excel.Sheets[1];
+            //var sheets = wb.Worksheets;
+            var ws = excel.Sheets[1];            
 
             var workbooksDest = excelDest.Workbooks;
             var wbDest = workbooksDest.Open(destFilename);
@@ -49,8 +85,8 @@ namespace NewEnrollmentsProgram
                 id2 = processes[1].Id;
             }
             catch
-            {
-                return -1;
+            {                
+                return CloseDoc(wb, wbDest, wbs, workbooksDest, wsDest);
             }                      
             
             string month;
@@ -96,6 +132,7 @@ namespace NewEnrollmentsProgram
             int fNameCol = 2;
             int lNameCol = 3;
             int deptCol = 14;
+            int deptPosCol = 20;
             int posCol = 21;
 
             int i = 2;
@@ -107,6 +144,8 @@ namespace NewEnrollmentsProgram
             wsDest.Cells[1, 5].Value = "Hire";
             wsDest.Cells[1, 6].Value = "Rehire";
             wsDest.Cells[1, 7].Value = "Pos";
+            wsDest.Cells[1, 8].Value = "DeptPos";
+            wsDest.Cells[1, 9].Value = "Date";
 
             for (int row = 2; ws.Cells[row, EEIDCol].Value != null; row++)
             {                
@@ -127,7 +166,8 @@ namespace NewEnrollmentsProgram
                                     wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
                                     wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
                                     wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
-
+                                    wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
+                                    wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
                                     i++;
                                 }
                             }
@@ -140,6 +180,8 @@ namespace NewEnrollmentsProgram
                                 wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
                                 wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
                                 wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
+                                wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
+                                wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
 
                                 i++;
                             }
@@ -161,6 +203,8 @@ namespace NewEnrollmentsProgram
                                     wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
                                     wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
                                     wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
+                                    wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
+                                    wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
 
                                     i++;
                                 }
@@ -174,6 +218,8 @@ namespace NewEnrollmentsProgram
                                 wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
                                 wsDest.Cells[i, 6].Value = ws.Cells[row, reHireCol].Value;
                                 wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
+                                wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
+                                wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
 
                                 i++;
                             }
@@ -182,36 +228,8 @@ namespace NewEnrollmentsProgram
                     }
                 }
             }
-
-            wbDest.Save();
             
-            wb.Close();
-            wbDest.Close();
-
-            excel.Quit();
-            excelDest.Quit();
-
-            Marshal.ReleaseComObject(sheets);
-            Marshal.ReleaseComObject(wb);
-            Marshal.ReleaseComObject(wbs);
-            Marshal.ReleaseComObject(excel);
-
-            Marshal.ReleaseComObject(wbDest);
-            Marshal.ReleaseComObject(workbooksDest);
-            Marshal.ReleaseComObject(wsDest);
-            Marshal.ReleaseComObject(excelDest);
-
-            try
-            {
-                Process.GetProcessById(id1).Kill();
-                Process.GetProcessById(id2).Kill();
-            }
-            catch
-            {
-                return -1;
-            }
-
-            return count;            
+            return CloseDoc(wb, wbDest, wbs, workbooksDest, wsDest);
         }
 
         private void KillExcelProcesses()

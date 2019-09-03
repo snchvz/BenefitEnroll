@@ -6,16 +6,11 @@
         xmlns:local="clr-namespace:NewEnrollmentsProgram"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
-        <Button Content="Source File" HorizontalAlignment="Left" Margin="74,43,0,0" VerticalAlignment="Top" Width="120" Click="Button_Click"/>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" Margin="224,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="469"/>
-        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="23" Margin="224,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="469"/>
-        <Button x:Name="Read_File" Content="Generate List" HorizontalAlignment="Left" Margin="74,199,0,0" VerticalAlignment="Top" Width="120" Click="Read_File_Click"/>
-        <TextBox x:Name="YearTextBox" HorizontalAlignment="Left" Height="23" Margin="332,274,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="4" />
-        <Label Content="Month:" HorizontalAlignment="Left" Margin="74,243,0,0" VerticalAlignment="Top"/>
-        <Label Content="Year: (YYYY)" HorizontalAlignment="Left" Margin="332,243,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="MonthComboBox" HorizontalAlignment="Left" Margin="74,274,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Destination File" HorizontalAlignment="Left" Margin="74,98,0,0" VerticalAlignment="Top" Width="120" Click="Button_Click_1" Height="19"/>
+        <Button Content="Mail Merge Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="157" Click="Button_Click_2" Height="42"/>
+        <Button Content="Make List Page" HorizontalAlignment="Left" Margin="180,10,0,0" VerticalAlignment="Top" Width="179" Height="42" Click="Button_Click"/>
+        <Frame x:Name="Main" Margin="0,57,-0.4,0" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Window>
