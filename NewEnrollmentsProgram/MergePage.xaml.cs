@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Word = Microsoft.Office.Interop.Word;
 using System.IO;
 using Outlook = Microsoft.Office.Interop.Outlook;
+using System.Runtime.InteropServices;
 
 namespace NewEnrollmentsProgram
 {
@@ -26,14 +27,101 @@ namespace NewEnrollmentsProgram
         public MergePage()
         {
             InitializeComponent();
+
+            CompanyComboBox.Items.Add("FWI");
+            CompanyComboBox.Items.Add("FSI");
+            CompanyComboBox.Items.Add("FCI");
+            CompanyComboBox.Items.Add("ACFS");
+
+            DocMergeComboBox.Items.Add("Performance Review");
+            DocMergeComboBox.Items.Add("Payroll Deductions");
+            DocMergeComboBox.Items.Add("New Enrollment Memos");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (DocMergeComboBox.SelectedItem == null || CompanyComboBox.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a company and a document type to merge");
+                return;
+            }
+
+            Object oTemplatePath;
+
+            //TODO-- clean up switch case and seperate into another function
+            switch (CompanyComboBox.SelectedIndex)
+            {
+                case 0:
+                    switch (DocMergeComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            break;
+                        case 1:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\FWI Payroll Deduction Template.docx";
+                            break;
+                        case 2:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Memos\FWI New Enrollment Memo.doc";
+                            break;
+                        default:
+                            return;
+                    }
+                    break;
+                case 1:
+                    switch (DocMergeComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            break;
+                        case 1:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\FSI Payroll Deduction Template.docx";
+                            break;
+                        case 2:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Memos\FSI New Enrollment Memo.doc";
+                            break;
+                        default:
+                            return;
+                    }
+                    break;
+                case 2:
+                    switch (DocMergeComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            break;
+                        case 1:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\FCI Payroll Deduction Template.docx";
+                            break;
+                        case 2:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Memos\FCI New Enrollment Memo.doc";
+                            break;
+                        default:
+                            return;
+                    }
+                    break;
+                case 3:
+                    switch (DocMergeComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            break;
+                        case 1:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\ACFS Payroll Deduction Template.docx";
+                            break;
+                        case 2:
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\Memos\ACFS New Enrollment Memo.doc";
+                            break;
+                        default:
+                            return;
+                    }
+                    break;
+                default:
+                    return;
+            }
+
             Word.Application oWord = new Word.Application();
             Word.Document oWordDoc = new Word.Document();
 
-            Object oTemplatePath = @"D:\Documents\PerformanceMergeTemplate.doc";
             try
             {
                 oWordDoc = oWord.Documents.Open(oTemplatePath);
@@ -73,7 +161,23 @@ namespace NewEnrollmentsProgram
                 return;
             }
 
-            oWordDoc.MailMerge.Execute(ref oMissing);
+            try
+            {
+                oWordDoc.MailMerge.Execute();
+            }
+            catch
+            {
+                oWordDoc.Close(0);
+                oWord.Quit();
+
+                Marshal.ReleaseComObject(oWord);
+                Marshal.ReleaseComObject(oWordDoc);
+
+                MessageBox.Show("The datasource contains no records");
+
+                return;
+            }
+           
 
             //oWordDoc.SaveAs2(@"D:\Documents\MergeTemplate.doc");
 
@@ -81,6 +185,9 @@ namespace NewEnrollmentsProgram
 
             oWordDoc.Close(0);
             oWord.Quit();
+
+            Marshal.ReleaseComObject(oWord);
+            Marshal.ReleaseComObject(oWordDoc);
 
             MessageBox.Show("merge successful");
         }

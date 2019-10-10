@@ -64,7 +64,7 @@ namespace NewEnrollmentsProgram
 
         public string readWriteCell(int monthInt, string year, string path, int sheet, string filename, string destFilename)
         {
-
+            string enrollMonth = monthInt.ToString();
 
             this.path = path;
 
@@ -146,6 +146,8 @@ namespace NewEnrollmentsProgram
             wsDest.Cells[1, 7].Value = "Pos";
             wsDest.Cells[1, 8].Value = "DeptPos";
             wsDest.Cells[1, 9].Value = "Date";
+            wsDest.Cells[1, 10].Value = "EnrollDate";
+            wsDest.Cells[1, 11].Value = "LastFriday";
 
             for (int row = 2; ws.Cells[row, EEIDCol].Value != null; row++)
             {                
@@ -168,6 +170,7 @@ namespace NewEnrollmentsProgram
                                     wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
                                     wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
                                     wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
+                                    wsDest.Cells[i, 10].Value = enrollMonth + "/01/" + year;
                                     i++;
                                 }
                             }
@@ -182,7 +185,7 @@ namespace NewEnrollmentsProgram
                                 wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
                                 wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
                                 wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
-
+                                wsDest.Cells[i, 10].Value = enrollMonth + "/01/" + year;
                                 i++;
                             }
 
@@ -205,7 +208,7 @@ namespace NewEnrollmentsProgram
                                     wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
                                     wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
                                     wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
-
+                                    wsDest.Cells[i, 10].Value = enrollMonth + "/01/" + year;
                                     i++;
                                 }
                             }
@@ -220,7 +223,7 @@ namespace NewEnrollmentsProgram
                                 wsDest.Cells[i, 7].Value = ws.Cells[row, posCol].Value;
                                 wsDest.Cells[i, 8].Value = ws.Cells[row, deptPosCol].Value;
                                 wsDest.Cells[i, 9].Value = DateTime.Today.ToShortDateString();
-
+                                wsDest.Cells[i, 10].Value = enrollMonth + "/01/" + year;
                                 i++;
                             }
 
