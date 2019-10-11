@@ -36,6 +36,29 @@ namespace NewEnrollmentsProgram
             DocMergeComboBox.Items.Add("Performance Review");
             DocMergeComboBox.Items.Add("Payroll Deductions");
             DocMergeComboBox.Items.Add("New Enrollment Memos");
+
+            DetectCompany();
+        }
+
+        public void DetectCompany()
+        {
+            switch(CompanyStatic.Instance.companyName)
+            {
+                case "FWI":
+                    CompanyComboBox.SelectedIndex = 0;
+                    break;
+                case "FSI":
+                    CompanyComboBox.SelectedIndex = 1;
+                    break;
+                case "FCI":
+                    CompanyComboBox.SelectedIndex = 2;
+                    break;
+                case "ACFS":
+                    CompanyComboBox.SelectedIndex = 3;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -43,6 +66,7 @@ namespace NewEnrollmentsProgram
             if (DocMergeComboBox.SelectedItem == null || CompanyComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a company and a document type to merge");
+                MessageBox.Show(CompanyStatic.Instance.companyName);
                 return;
             }
 
@@ -129,7 +153,7 @@ namespace NewEnrollmentsProgram
 
             catch
             {
-                MessageBox.Show("could not find performance temple doc");
+                MessageBox.Show("could not find " + oTemplatePath.ToString());
                 oWordDoc.Close(0);
                 oWord.Quit();
                 return;

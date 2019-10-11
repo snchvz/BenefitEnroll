@@ -23,17 +23,19 @@ namespace NewEnrollmentsProgram
     /// </summary>
     public partial class MainWindow : Window
     {
-        MergePage mailPage = new MergePage();
-        MakeListPage listPage = new MakeListPage();
+        MergePage mergePage = new MergePage();
+        MakeListPage listPage = new MakeListPage();       
 
         public MainWindow()
         {
             InitializeComponent();
+            CompanyStatic.Instance.companyName = "";
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Main.Content = mailPage;            
+            Main.Content = mergePage;
+            mergePage.DetectCompany();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

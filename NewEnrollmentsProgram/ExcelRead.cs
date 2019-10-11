@@ -111,6 +111,7 @@ namespace NewEnrollmentsProgram
                     break;
             }
 
+            //clear the destination worksheet
             try
             {
                 foreach (dynamic worksheet in wbDest.Worksheets)
@@ -148,6 +149,27 @@ namespace NewEnrollmentsProgram
             wsDest.Cells[1, 9].Value = "Date";
             wsDest.Cells[1, 10].Value = "EnrollDate";
             wsDest.Cells[1, 11].Value = "LastFriday";
+
+            if(path.Contains("FWI"))
+            {
+                wsDest.Cells[1, 12].Value = "FWI";
+                CompanyStatic.Instance.companyName = "FWI";
+            }
+            else if(path.Contains("FSI"))
+            {
+                wsDest.Cells[1, 12].Value = "FSI";
+                CompanyStatic.Instance.companyName = "FSI";
+            }
+            else if (path.Contains("FCI"))
+            {
+                wsDest.Cells[1, 12].Value = "FCI";
+                CompanyStatic.Instance.companyName = "FCI";
+            }
+            else if (path.Contains("ACFS"))
+            {
+                wsDest.Cells[1, 12].Value = "ACFS";
+                CompanyStatic.Instance.companyName = "ACFS";
+            }
 
             for (int row = 2; ws.Cells[row, EEIDCol].Value != null; row++)
             {                
