@@ -9,7 +9,8 @@
 
     <Grid>
         <Frame x:Name="Main" Margin="0,65,0,0" NavigationUIVisibility="Hidden" Background="Bisque"/>
-        <Button Content="Mail Merge Page" HorizontalAlignment="Left" Margin="182,10,0,0" VerticalAlignment="Top" Width="157" Click="Button_Click_2" Height="42"/>
+        <Button Content="Merge Page" HorizontalAlignment="Left" Margin="182,10,0,0" VerticalAlignment="Top" Width="157" Click="Button_Click_2" Height="42"/>
         <Button Content="Make List Page" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="157" Height="42" Click="Button_Click"/>
+        <Button x:Name="MailNavButton" Content="Mail Page" HorizontalAlignment="Left" Margin="363,10,0,0" VerticalAlignment="Top" Width="157" Click="Button_Click_3" Height="42"/>
     </Grid>
 </Window>

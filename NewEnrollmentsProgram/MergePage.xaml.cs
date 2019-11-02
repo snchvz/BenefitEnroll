@@ -33,6 +33,21 @@ namespace NewEnrollmentsProgram
             CompanyComboBox.Items.Add("FCI");
             CompanyComboBox.Items.Add("ACFS");
 
+
+            //TODO-- Set up as an observable collection to use raiseProperty events for when the company is changed dynamically
+            YardComboBox.Items.Add("All Yards");
+            YardComboBox.Items.Add("AN");
+            YardComboBox.Items.Add("BK");
+            YardComboBox.Items.Add("FR");
+            YardComboBox.Items.Add("MN");
+            YardComboBox.Items.Add("OC");
+            YardComboBox.Items.Add("PD");
+            YardComboBox.Items.Add("RV");
+            YardComboBox.Items.Add("SA");
+            YardComboBox.Items.Add("SJ");
+            YardComboBox.Items.Add("SP");
+
+
             DocMergeComboBox.Items.Add("Performance Review");
             DocMergeComboBox.Items.Add("Payroll Deductions");
             DocMergeComboBox.Items.Add("New Enrollment Memos");
@@ -65,7 +80,7 @@ namespace NewEnrollmentsProgram
         {
             if (DocMergeComboBox.SelectedItem == null || CompanyComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Please select a company and a document type to merge");
+                MessageBox.Show("Please select a company, yard and document type to merge");
                 MessageBox.Show(CompanyStatic.Instance.companyName);
                 return;
             }
@@ -79,7 +94,7 @@ namespace NewEnrollmentsProgram
                     switch (DocMergeComboBox.SelectedIndex)
                     {
                         case 0:
-                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\FWI Performance Review Template.docx";
                             break;
                         case 1:
                             oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\FWI Payroll Deduction Template.docx";
@@ -95,7 +110,7 @@ namespace NewEnrollmentsProgram
                     switch (DocMergeComboBox.SelectedIndex)
                     {
                         case 0:
-                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\FSI Performance Review Template.docx";
                             break;
                         case 1:
                             oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\FSI Payroll Deduction Template.docx";
@@ -111,7 +126,7 @@ namespace NewEnrollmentsProgram
                     switch (DocMergeComboBox.SelectedIndex)
                     {
                         case 0:
-                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\FCI Performance Review Template.docx";
                             break;
                         case 1:
                             oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\FCI Payroll Deduction Template.docx";
@@ -127,7 +142,7 @@ namespace NewEnrollmentsProgram
                     switch (DocMergeComboBox.SelectedIndex)
                     {
                         case 0:
-                            oTemplatePath = @"D:\Documents\New Enroll Memos\Performance Review Template.docx";
+                            oTemplatePath = @"D:\Documents\New Enroll Memos\ACFS Performance Review Template.docx";
                             break;
                         case 1:
                             oTemplatePath = @"D:\Documents\New Enroll Memos\Payroll Deduction Templates\ACFS Payroll Deduction Template.docx";
@@ -154,7 +169,7 @@ namespace NewEnrollmentsProgram
             catch
             {
                 MessageBox.Show("could not find " + oTemplatePath.ToString());
-                oWordDoc.Close(0);
+                //oWordDoc.Close(0);
                 oWord.Quit();
                 return;
             }
@@ -167,8 +182,14 @@ namespace NewEnrollmentsProgram
                     file.Delete();
             }
 
-            Object oMissing = System.Reflection.Missing.Value;
             object qry = "select * from [Sheet1$]";
+            Object oMissing = System.Reflection.Missing.Value;
+
+            if (YardComboBox.SelectedValue != null )
+            {
+                if(YardComboBox.SelectedValue.ToString() != "All Yards")
+                    qry += " WHERE Yard = '" + YardComboBox.SelectedValue.ToString() + "'";
+            }                
 
             try
             {
@@ -200,13 +221,8 @@ namespace NewEnrollmentsProgram
                 MessageBox.Show("The datasource contains no records");
 
                 return;
-            }
-           
-
-            //oWordDoc.SaveAs2(@"D:\Documents\MergeTemplate.doc");
-
-            //oWordDoc.ExportAsFixedFormat("D:\\Documents\\myfile.pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
-
+            }  
+            
             oWordDoc.Close(0);
             oWord.Quit();
 
@@ -214,33 +230,6 @@ namespace NewEnrollmentsProgram
             Marshal.ReleaseComObject(oWordDoc);
 
             MessageBox.Show("merge successful");
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Outlook.Application _app = new Outlook.Application();
-                Outlook.MailItem mail = (Outlook.MailItem)_app.CreateItem(Outlook.OlItemType.olMailItem);
-
-                string filepath = @"D:\Documents\EMPLOYEE PERFORMANCE REVIEW.docx";
-
-                mail.To = "asanchez@fenceworks.us";
-                mail.Subject = "Performance Reviews";
-                mail.Body = "benefit enrollments test";
-                mail.Importance = Outlook.OlImportance.olImportanceNormal;
-                Outlook.Attachment file = mail.Attachments.Add(filepath, Outlook.OlAttachmentType.olByValue, 1, filepath);
-
-                mail.Send();
-                MessageBox.Show("message sent");
-
-                _app.Quit();
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(_app);
-            }
-            catch
-            {
-                MessageBox.Show("failed to send email");
-            }
-        }
+        }        
     }
 }

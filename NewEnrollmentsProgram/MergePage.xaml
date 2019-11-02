@@ -10,10 +10,11 @@
 
     <Grid>
         <Button Content="Merge List" Click="Button_Click" Height="33" Margin="101,145,617,271.6"  />
-        <Button Content="Send Mail" Click="Button_Click_2" Margin="257,265,413,142.6" />
         <ComboBox x:Name="DocMergeComboBox" Height="33" Margin="214,145,363,271.6"/>
         <ComboBox x:Name="CompanyComboBox" HorizontalAlignment="Left" Margin="214,28,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
-        <Label Content="Company" HorizontalAlignment="Left" Margin="101,28,0,0" VerticalAlignment="Top" Width="82"/>
+        <Label Content="Company" HorizontalAlignment="Left" Margin="101,19,0,0" VerticalAlignment="Top" Width="82" FontSize="16" Height="35"/>
+        <ComboBox x:Name="YardComboBox" HorizontalAlignment="Left" Margin="530,28,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
+        <Label Content="Yard" HorizontalAlignment="Left" Margin="443,28,0,0" VerticalAlignment="Top" Width="61" Height="33" FontSize="16"/>
 
     </Grid>
 </Page>

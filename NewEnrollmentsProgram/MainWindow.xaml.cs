@@ -24,7 +24,10 @@ namespace NewEnrollmentsProgram
     public partial class MainWindow : Window
     {
         MergePage mergePage = new MergePage();
-        MakeListPage listPage = new MakeListPage();       
+        MakeListPage listPage = new MakeListPage();
+        mailPage mail_Page = new mailPage();
+        
+        
 
         public MainWindow()
         {
@@ -41,6 +44,11 @@ namespace NewEnrollmentsProgram
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Main.Content = listPage;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Main.Content = mail_Page;
         }
     }
 }

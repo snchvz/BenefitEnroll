@@ -62,16 +62,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CompanyStatic.cs" />
+    <Compile Include="mailPage.xaml.cs">
+      <DependentUpon>mailPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MakeListPage.xaml.cs">
       <DependentUpon>MakeListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MergePage.xaml.cs">
       <DependentUpon>MergePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestPage.xaml.cs">
-      <DependentUpon>TestPage.xaml</DependentUpon>
-    </Compile>
     <Page Include="MailMergePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="mailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,10 +100,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MergePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

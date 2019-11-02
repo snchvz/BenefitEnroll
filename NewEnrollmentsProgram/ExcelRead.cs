@@ -14,8 +14,6 @@ namespace NewEnrollmentsProgram
     {
         string path = "";
 
-        int count = 0;
-
         //open 2 excel apps
         _Application excel = new Application();
         _Application excelDest = new Application();
@@ -70,12 +68,11 @@ namespace NewEnrollmentsProgram
 
             var wbs = excel.Workbooks;
             var wb = wbs.Open(path);
-            //var sheets = wb.Worksheets;
-            var ws = excel.Sheets[1];            
+            var ws = excel.Sheets[1];
 
             var workbooksDest = excelDest.Workbooks;
             var wbDest = workbooksDest.Open(destFilename);
-            var wsDest = excelDest.Worksheets[1];
+            var wsDest = excelDest.Worksheets[1];           
 
             //**need better way to terminate procress
             try
@@ -148,7 +145,7 @@ namespace NewEnrollmentsProgram
             wsDest.Cells[1, 8].Value = "DeptPos";
             wsDest.Cells[1, 9].Value = "Date";
             wsDest.Cells[1, 10].Value = "EnrollDate";
-            wsDest.Cells[1, 11].Value = "LastFriday";
+            wsDest.Cells[1, 11].Value = "LastFriday";           
 
             if(path.Contains("FWI"))
             {
@@ -184,7 +181,12 @@ namespace NewEnrollmentsProgram
                                 if (ws.Cells[row, termCol].Value.ToString() != "T")
                                 {
                                     wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
-                                    wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+
+                                    if (CompanyStatic.Instance.companyName != "FWI")
+                                        wsDest.Cells[i, 2].Value = YardNumToYardName((int)ws.Cells[row, deptCol].Value2);
+                                    else
+                                        wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value2;
+
                                     wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
                                     wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
                                     wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
@@ -199,7 +201,12 @@ namespace NewEnrollmentsProgram
                             else
                             {
                                 wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
-                                wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+
+                                if (CompanyStatic.Instance.companyName != "FWI")
+                                    wsDest.Cells[i, 2].Value = YardNumToYardName((int)ws.Cells[row, deptCol].Value2);
+                                else
+                                    wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value2;
+
                                 wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
                                 wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
                                 wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
@@ -222,7 +229,12 @@ namespace NewEnrollmentsProgram
                                 if (ws.Cells[row, termCol].Value.ToString() != "T")
                                 {
                                     wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
-                                    wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+
+                                    if (CompanyStatic.Instance.companyName != "FWI")
+                                        wsDest.Cells[i, 2].Value = YardNumToYardName((int)ws.Cells[row, deptCol].Value2);
+                                    else
+                                        wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value2;
+
                                     wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
                                     wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
                                     wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
@@ -237,7 +249,12 @@ namespace NewEnrollmentsProgram
                             else
                             {
                                 wsDest.Cells[i, 1].Value = ws.Cells[row, EEIDCol].Value;
-                                wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value;
+
+                                if (CompanyStatic.Instance.companyName != "FWI")
+                                    wsDest.Cells[i, 2].Value = YardNumToYardName((int)ws.Cells[row, deptCol].Value2);
+                                else
+                                    wsDest.Cells[i, 2].Value = ws.Cells[row, deptCol].Value2;
+
                                 wsDest.Cells[i, 3].Value = ws.Cells[row, fNameCol].Value;
                                 wsDest.Cells[i, 4].Value = ws.Cells[row, lNameCol].Value;
                                 wsDest.Cells[i, 5].Value = ws.Cells[row, hireCol].Value;
@@ -255,6 +272,41 @@ namespace NewEnrollmentsProgram
             }
             
             return CloseDoc(wb, wbDest, wbs, workbooksDest, wsDest);
+        }
+
+        string YardNumToYardName(int yard)
+        {
+            string yardName = "";
+
+            switch (yard)
+            {
+                case 1:
+                    yardName = "RV";
+                    break;
+                case 100:
+                    yardName = "RV";
+                    break;
+                case 2:
+                    yardName = "OC";
+                    break;
+                case 200:
+                    yardName = "RV";
+                    break;
+                case 3:
+                    yardName = "SA";
+                    break;
+                case 300:
+                    yardName = "RV";
+                    break;
+                case 4:
+                    yardName = "SJ";
+                    break;
+                case 400:
+                    yardName = "RV";
+                    break;
+            }            
+
+            return yardName;
         }
 
         private void KillExcelProcesses()
