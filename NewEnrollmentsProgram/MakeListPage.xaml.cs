@@ -28,6 +28,7 @@ namespace NewEnrollmentsProgram
 
         public MakeListPage()
         {
+            //test
             InitializeComponent();
             MonthComboBox.Items.Add("1");
             MonthComboBox.Items.Add("2");
